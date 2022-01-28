@@ -1,0 +1,32 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: kenexar-core
+
+on: push
+jobs:
+  build-n-publish:
+    name: Build and publish
+    runs-on: debian-10
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install pypa
+      run: >-
+        python -m pip install build --user
+    - name: Build wheel
+      run: >-
+        python -m build --sdist --wheel -outdir dist/
+    - name: Publish
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.TEST_PYPI_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
