@@ -24,7 +24,7 @@ jobs:
         python -m pip install build --user
     - name: Build wheel
       run: >-
-        python -m build --sdist --wheel --outdir dist/
+        python -m build
     - name: Publish
       uses: pypa/gh-action-pypi-publish@master
       with:
