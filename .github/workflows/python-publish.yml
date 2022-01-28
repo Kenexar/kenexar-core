@@ -8,7 +8,7 @@
 
 name: kenexar-core
 
-on: push
+on: [release]
 jobs:
   build-n-publish:
     name: Build and publish
