@@ -8,25 +8,25 @@
 
 name: knxrcore
 
-on: [release]
+on: [ release ]
 jobs:
   build-n-publish:
     name: Build and publish
     runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@master
-    - name: Set up python 3.8
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - name: Install pypa
-      run: >-
-        python -m pip install build --user
-    - name: Build wheel
-      run: >-
-        python -m build
-    - name: Publish
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        password: ${{ secrets.TEST_PYPI_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+      - uses: actions/checkout@master
+      - name: Set up python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install pypa
+        run: >-
+          python -m pip install build --user
+      - name: Build wheel
+        run: >-
+          python -m build
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/

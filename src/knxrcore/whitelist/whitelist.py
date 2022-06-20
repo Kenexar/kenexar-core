@@ -1,6 +1,5 @@
-from abc import ABC
 from logging import Logger
-from typing import Iterable, TypeVar, Generic, Sized, Mapping
+from typing import Iterable, TypeVar, Generic, Mapping
 
 T = TypeVar('T')
 S = TypeVar('S', int, str)
