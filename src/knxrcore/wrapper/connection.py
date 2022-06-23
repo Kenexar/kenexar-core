@@ -24,12 +24,12 @@ from typing import Tuple
 
 
 class ApiConnection(HTTPSConnection):
-    def __init__(self):
+    def __init__(self, host):
         """
         This is the Base connection class for generel wrappers that we maybe want to write.
         """
 
-        super().__init__(host='api.aniapi.com')
+        super().__init__(host=host)
 
     def get(self, url: str, headers: dict) -> Tuple[bytes, HTTPMessage]:
         """ This will send a `GET` request
