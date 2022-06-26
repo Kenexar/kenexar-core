@@ -1,6 +1,6 @@
 [build-system]
 requires = [
     "setuptools>=57",
-    "mysql-connector",
+    "mysql-connector-python",
     "wheel"
 ]
