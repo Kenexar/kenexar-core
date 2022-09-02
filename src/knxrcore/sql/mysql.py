@@ -34,12 +34,11 @@ class Connection:
         result = cur.fetchall()
 
         conn.commit()
-
         cur.close()
         return result
 
     def update(self, sql: str, params: Any = '') -> Any:
-        """ With this method you can Update the Database, such things like `UPDATE` or `DELETE` query's
+        """ With this method you can Update the Database, like `UPDATE` or `DELETE` query's
 
         Parameters
         ----------
