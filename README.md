@@ -1,4 +1,4 @@
-It's just to try out how to create a python package
+This is the base Package for the most python projects from the KenexarEU Team.
 
 ##
 
