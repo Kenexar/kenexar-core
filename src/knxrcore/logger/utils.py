@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 def write_logfile(logger: 'Logger', msg) -> int:
-    if logger.log_level is None:
+    if logger.log_file is None:
         return 0
 
     with open(logger.log_file, 'w+') as f:

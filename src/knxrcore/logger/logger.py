@@ -17,13 +17,32 @@ class Logger:
             self.prefix = prefix(True, socket.gethostname())
 
     def info(self, msg: str):
-        print(ANSI_GREEN + self.prefix + msg + ANSI_RESET)
+        ret = ANSI_GREEN + self.prefix + msg + ANSI_RESET
+        write_logfile(self, ret)
+
+        print(ret)
+        return ret
 
     def warning(self, msg: str):
-        print(ANSI_YELLOW + self.prefix + msg + ANSI_RESET)
+        ret = ANSI_YELLOW + self.prefix + msg + ANSI_RESET
+
+        write_logfile(self, ret)
+
+        print(ret)
+        return ret
 
     def error(self, msg: str):
-        print(ANSI_RED + self.prefix + msg + ANSI_RESET)
+        ret = ANSI_RED + self.prefix + msg + ANSI_RESET
+
+        write_logfile(self, ret)
+
+        print(ret)
+        return ret
 
     def debug(self, msg: str):
-        print(self.prefix + msg)
+        ret = self.prefix + msg
+
+        write_logfile(self, ret)
+
+        print(ret)
+        return ret
