@@ -15,4 +15,4 @@ Just run: `python3 -m pip install -i https://test.pypi.org/simple/ kenexar-core`
 
 
 ### Docs
-Coming soon...
+Not the best but it works: [Docs](https://kenexar.github.io/kenexar-core/)
