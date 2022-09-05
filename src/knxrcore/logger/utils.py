@@ -15,7 +15,7 @@ def write_logfile(logger: 'Logger', msg) -> int:
         f.write(msg + "\n")
 
 
-def prefix(date: bool, name: str, tz: Optional[str] = "Europe/Berlin") -> str:
+def prefix(date: bool, name: str, tz: Optional[str] = 'Europe/Berlin') -> str:
     ret = ''
     if date:
         ret += f'{datetime.now(tz=pytz.timezone(tz)):%d-%m-%Y/%H:%M:%S} | '
