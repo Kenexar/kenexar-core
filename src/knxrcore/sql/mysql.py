@@ -1,4 +1,6 @@
-from typing import Any, Union, List, Optional
+from __future__ import annotations
+
+from typing import Any
 
 from mysql.connector import connect
 
@@ -10,7 +12,7 @@ class Connection:
         self.host = kw.get('host', 'localhost')
         self.db = kw.get('db', '')
 
-    def get(self, sql: str, params: Any = '') -> Union[list, None, List[Optional[dict]], List[tuple]]:
+    def get(self, sql: str, params: Any = '') -> list[dict | tuple] | None:
         """ Here we can select something from the Database.
 
         Parameters
@@ -56,7 +58,7 @@ class Connection:
 
         return self.get(sql, params)
 
-    async def aget(self, sql: str, params: Any = '') -> Union[list, List[Optional[dict]], List[tuple]]:
+    async def aget(self, sql: str, params: Any = '') -> list[dict | tuple | None]:
         """ Here we can select asynchronous something from the Database.
 
         Parameters

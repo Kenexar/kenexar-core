@@ -15,8 +15,7 @@
 #  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 #  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #  OTHER DEALINGS IN THE SOFTWARE.
-from http.client import HTTPSConnection, HTTPMessage
-from typing import Tuple
+from http.client import HTTPSConnection
 
 
 class ApiConnection(HTTPSConnection):
@@ -27,7 +26,7 @@ class ApiConnection(HTTPSConnection):
 
         super().__init__(host=host)
 
-    def get(self, url: str, headers: dict) -> Tuple[bytes, HTTPMessage]:
+    def get(self, url: str, headers: dict) -> tuple:
         """ This will send a `GET` request
 
         Parameters
@@ -53,23 +52,23 @@ class ApiConnection(HTTPSConnection):
         self.close()
         return res, header
 
-    def __request(self, method: str, headers: dict, url: str) -> Tuple[bytes, HTTPMessage]:
+    def __request(self, method: str, headers: dict, url: str) -> tuple:
         """ This is just for preventing repetitive code samples
 
         Parameters
         ----------
-        method : [:class:`str`]
+        method : str
             The request method that is needed, e.x. POST or GET.
 
-        headers : [:class:`dict`]
+        headers : dict
             The default header for the authorization.
 
-        url : [:class:`str`]
+        url : str
             The url to send the request to.
 
         Returns
         -------
-        :class:`bytes` and :class:`HTTPMessage`
+        bytes and HTTPMessage
             Returns the data
         """
 
@@ -81,7 +80,7 @@ class ApiConnection(HTTPSConnection):
 
         return res, header
 
-    def __requests_body(self, method: str, data: dict, headers: dict, url: str) -> Tuple[bytes, HTTPMessage]:
+    def __requests_body(self, method: str, data: dict, headers: dict, url: str) -> tuple:
         """ the same as the __request method but for PUT and POST req
 
         Parameters
@@ -112,26 +111,26 @@ class ApiConnection(HTTPSConnection):
 
         return res, header
 
-    def post(self, url: str, headers: dict, data: dict) -> Tuple[bytes, HTTPMessage]:
+    def post(self, url: str, headers: dict, data: dict) -> tuple:
         """
         This will send a `POST` request
 
         Parameters
         ----------
-        url : :class:`str`
+        url : str
             The url to send the request to.
 
-        headers : :class:`dict`
+        headers : dict
             The headers to send with the request. This is for the jwt token
             and accept thingies.
 
-        data : :class:`dict`
+        data : dict
             The body of the request. This is the data that will be sent to
             the server.
 
         Returns
         -------
-        :class:`bytes`, :class:`HTTPMessage`
+        bytes and HTTPMessage
             The read response from the server.
         """
 
@@ -140,22 +139,22 @@ class ApiConnection(HTTPSConnection):
         self.close()
         return res, header
 
-    def delete(self, url: str, headers: dict) -> Tuple[bytes, HTTPMessage]:
+    def delete(self, url: str, headers: dict) -> tuple:
         """
         This will send a `DELETE` request
 
         Parameters
         ----------
-        url : :class:`str`
+        url : str
             The url to send the request to.
 
-        headers : :class:`dict`
+        headers : dict
             The headers to send with the request. This is for the jwt token
             and accept thingies.
 
         Returns
         -------
-        :class:`bytes`, :class:`HTTPMessage`
+        bytes and HTTPMessage
             The read response from the server. When it responds something.
         """
 
@@ -164,23 +163,23 @@ class ApiConnection(HTTPSConnection):
         self.close()
         return res, header
 
-    def put(self, url: str, headers: dict, data: dict) -> Tuple[bytes, HTTPMessage]:
+    def put(self, url: str, headers: dict, data: dict) -> tuple:
         """ Here you can create entries on the api
 
         Parameters
         ----------
-        url : [:class:`str`]
+        url : str
             The endpoints url to access.
 
-        headers : [:class:`dict`]
+        headers : dict
             The default headers.
 
-        data : [:class:`dict`]
+        data : dict
             The data for the creation.
 
         Returns
         -------
-        :class:`bytes` and :class:`HTTPMessage`
+        bytes and HTTPMessage
             The response from the endpoint.
         """
         res, header = self.__requests_body('PUT', data=data, url=url, headers=headers)
