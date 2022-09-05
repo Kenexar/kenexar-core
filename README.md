@@ -12,3 +12,7 @@ Just run:
 ### On Linux:
 
 Just run: `python3 -m pip install -i https://test.pypi.org/simple/ kenexar-core`
+
+
+### Docs
+Coming soon...
