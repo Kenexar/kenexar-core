@@ -1,29 +1,135 @@
+#  Copyright (c) 2022. exersalza
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+#  associated documentation files (the "Software"), to deal in the Software without restriction, including
+#  without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+#  of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
+#  conditions:
+#
+#  The above copyright notice and this permission notice shall be included in all copies or substantial
+#  portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+#  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+#  PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+#  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+#  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+#  OTHER DEALINGS IN THE SOFTWARE.
+from __future__ import annotations
+
 import socket
+from collections import namedtuple
 
-from utils import *
+from .utils import create_prefix, Ansi, LogLevel, write_logfile
 
-ANSI_RED = '\u001b[31m'
-ANSI_YELLOW = '\u001b[33m'
-ANSI_GREEN = '\u001b[32m'
-ANSI_RESET = '\u001b[0m'
+level = namedtuple('level', ['level', 'color'])
+
+log_levels = {
+    'info': level(1, Ansi.GREEN),
+    'warn': level(2, Ansi.YELLOW),
+    'error': level(3, Ansi.RED),
+    'debug': level(4, Ansi.RESET)
+}
 
 
 class Logger:
-    def __init__(self, log_file: Optional[str] = None, log_level: int = 0, _prefix: Optional[str] = "") -> None:
+    def __init__(self, log_level: int | LogLevel,
+                 name: str = '',
+                 log_file: str = None,
+                 prefix: str = '',
+                 disp_type: bool = True) -> None:
+
+        """ **This is the base Logger class.**
+
+        Parameters:
+        ----------
+        log_level : int
+            Set the log level.<br>
+            0: None, 1: Info, 2: Warning, 3: Error, 4: Debug
+
+        name : str, optional
+            Set the name for the Logger. <br>
+            Default: hostname of the machine.
+
+        log_file : str, optional
+            Set the path to a Logfile.
+
+        prefix : str, optional
+            Create a Prefix that appears in front of the msg. <br>
+            You can set a completely custom prefix, but also generate one from the create_prefix function.
+            <br>[default]: DD-MM-YYYY/HH:MM:SS | hostname | msg
+
+        disp_type : bool, optional
+            Should the Logger display the type of the message.
+        """
+
         self.log_file = log_file
         self.log_level = log_level
+        self.prefix = prefix
+        self.disp_type = disp_type
 
-        if not _prefix:
-            self.prefix = prefix(True, socket.gethostname())
+        self.hostname = name if name else socket.gethostname()
 
-    def info(self, msg: str):
-        print(ANSI_GREEN + self.prefix + msg + ANSI_RESET)
+    def __prepare_mod_msg(self, msg: str, name: str) -> str:
+        """ Prepare the Log message. Appends the Prefix and color codes
 
-    def warning(self, msg: str):
-        print(ANSI_YELLOW + self.prefix + msg + ANSI_RESET)
+        Parameters
+        ----------
+        msg : str
+            The base message from the User.
+        name : str
+            The name of the function that called it.
 
-    def error(self, msg: str):
-        print(ANSI_RED + self.prefix + msg + ANSI_RESET)
+        Returns
+        -------
+        str
+            The modified message from the User.
 
-    def debug(self, msg: str):
-        print(self.prefix + msg)
+        """
+        prefix = self.prefix
+
+        if not self.prefix:
+            prefix = create_prefix(True, self.hostname, _type=name if self.disp_type else '')
+
+        mod_msg = log_levels[name].color.value + prefix + msg + Ansi.RESET.value
+
+        write_logfile(self, prefix + msg)
+        return mod_msg
+
+    def __can_log(self, name) -> bool:
+        """ This function checks if the log level is says it can log.
+
+        Parameters
+        ----------
+        name : str
+            The name of the log function that was called.
+
+        Returns
+        -------
+        bool
+            Does the loglevel match the required level
+        """
+
+        if not log_levels[name][0] <= self.log_level:
+            return False
+        return True
+
+    def info(self, msg: str) -> None:
+        """ This represents a Green message with info content. """
+        if self.__can_log('info'):
+            print(self.__prepare_mod_msg(msg, 'info'))
+
+    def warning(self, msg: str) -> None:
+        """ This represents a Yellow message with warning content. """
+        if self.__can_log('warn'):
+            print(self.__prepare_mod_msg(msg, 'warn'))
+
+    def error(self, msg: str) -> None:
+        """ This represents a Red message with error content. """
+        if self.__can_log('error'):
+            print(self.__prepare_mod_msg(msg, 'error'))
+
+    def debug(self, msg: str) -> None:
+        """ This represents a White message with Debug content. """
+        if self.__can_log('error'):
+            print(self.__prepare_mod_msg(msg, 'debug'))
