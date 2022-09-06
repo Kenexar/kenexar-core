@@ -16,6 +16,9 @@
     ·
     <a href="https://github.com/Kenexar/kenexar-core/issues">Request Feature</a>
   </p>
+  <a align="center" href="https://www.codefactor.io/repository/github/kenexar/kenexar-core"><img src="https://www.codefactor.io/repository/github/kenexar/kenexar-core/badge" alt="CodeFactor" /></a>
+    <a align="center" href="https://www.python.org/"><img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg" alt="Python"/></a>
+    <a href="https://github.com/Kenexar/kenexar-core/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Kenexar/kenexar-core"></a>
 </div>
 
 
