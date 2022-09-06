@@ -46,5 +46,4 @@ Feel free to open Issues or PR's
 
 
 
-<br />
 Project by [exersalza "Julian J."](https://github.com/exersalza)
