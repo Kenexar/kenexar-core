@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/Kenexar/kenexar-core">
     <img src="https://cloud.kenexar.eu/s/bQBApT3Sa56KBij/preview" alt="Logo" width="80" height="80">
   </a>
 
