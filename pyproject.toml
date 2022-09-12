@@ -2,5 +2,6 @@
 requires = [
     "setuptools>=57",
     "mysql-connector-python",
+    "pytz",
     "wheel"
 ]
