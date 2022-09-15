@@ -32,7 +32,7 @@ def write_logfile(logger: 'Logger', msg: str) -> int:
         The current logger, uses the logger.log_file parameter
 
     msg : str
-    The message to be logged
+        The message to be logged
 
     Returns
     -------
@@ -50,7 +50,7 @@ def write_logfile(logger: 'Logger', msg: str) -> int:
 
 def create_prefix(date: bool,
                   name: str,
-                  _type: str = '',
+                  mtype: str = '',
                   tz: str = 'Europe/Berlin') -> str:
     """ Create the Prefix for log messages
 
@@ -62,7 +62,7 @@ def create_prefix(date: bool,
     name : str
         Current Logger name
 
-    _type : str, optional
+    mtype : str
         Type of log message
 
     tz : str, optional
@@ -78,8 +78,8 @@ def create_prefix(date: bool,
     if date:
         ret += f'{datetime.now(tz=pytz.timezone(tz)):%d-%m-%Y/%H:%M:%S} | '
 
-    if _type:
-        ret += f'{_type} | '
+    if mtype:
+        ret += f'{mtype} | '
 
     ret += f'{name} | '
     return ret

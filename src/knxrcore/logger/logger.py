@@ -89,7 +89,7 @@ class Logger:
         prefix = self.prefix
 
         if not self.prefix:
-            prefix = create_prefix(True, self.hostname, _type=name if self.disp_type else '')
+            prefix = create_prefix(True, self.hostname, mtype=name if self.disp_type else '')
 
         mod_msg = log_levels[name].color.value + prefix + msg + Ansi.RESET.value
 
