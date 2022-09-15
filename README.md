@@ -26,10 +26,10 @@
 Here I give you the Installation instruction:
 
 #### On Windows:
-- `pip install -i https://test.pypi.org/simple/ kenexar-core`
+- `pip install kenexar-core`
 
 #### On Linux:
-- `python3 -m pip install -i https://test.pypi.org/simple/ kenexar-core`
+- `python3 -m pip install kenexar-core`
 
 
 And then you can start.
