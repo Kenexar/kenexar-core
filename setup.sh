@@ -2,8 +2,7 @@
 
 echo "Check for venv/"
 
-if [ -d "venv/" ]
-then
+if [ -d "venv/" ]; then
   [[ "$VIRTUAL_ENV" ]] && source "venv/scripts/activate"
 else
   eval python3 -m venv venv/
@@ -11,7 +10,7 @@ else
 fi
 
 echo "Installing the Requirements"
-eval "pip3 install -r req.txt"
+eval "pip3 install -r req"
 
 echo "Run pylint to create a Difference between versions"
 # shellcheck disable=SC2046
