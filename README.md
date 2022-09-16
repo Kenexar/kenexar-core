@@ -7,7 +7,7 @@
   <h3 align="center">Kenexar-Core</h3>
 
   <p align="center">
-    This is the base Package for the most python projects from the KenexarEU Team.
+    This is the base Package for the most python projects from the KenexarEU Team.<br> Also is this project a collection of the most used code snippets.
     <br />
     <a href="https://kenexar.github.io/kenexar-core/"><strong>Explore the docs »</strong></a>
     <br />
