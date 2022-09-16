@@ -7,10 +7,10 @@ if [ -d "venv/" ]; then
 else
   eval python3 -m venv venv/
   source "venv/scripts/activate"
-fi
 
-echo "Installing the Requirements"
-eval "pip3 install -r req"
+  echo "Installing Requirements"
+  eval "pip3 install -r req"
+fi
 
 echo "Run pylint to create a Difference between versions"
 # shellcheck disable=SC2046
