@@ -56,7 +56,15 @@ class Connection:
             Nothing.
         """
 
-        return self.get(sql, params)
+        conn = connect(user=self.user, password=self.password, host=self.host, database=self.db)
+        cur = conn.cursor(buffered=True)
+
+        cur.execute(sql, params)
+
+        conn.commit()
+        cur.close()
+
+        return []
 
     async def aget(self, sql: str, params: Any = '') -> list[dict | tuple | None]:
         """ Here we can select asynchronous something from the Database.
