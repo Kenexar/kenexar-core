@@ -26,6 +26,7 @@ if TYPE_CHECKING:
 
 class User:
     """User class"""
+
     def __init__(self):
         pass
 
@@ -52,4 +53,3 @@ class Whitelist:
 
     def update(self, user: str, perm: int | str | object):
         pass
-
