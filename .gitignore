@@ -132,3 +132,4 @@ dmypy.json
 
 playground.*
 tests/
+!__init__.py
