@@ -19,6 +19,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install -r req
+        echo "Install package"
+        python3 setup.py build
+        pip install .
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
