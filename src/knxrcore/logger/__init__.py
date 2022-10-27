@@ -1,1 +1,1 @@
-from src.knxrcore.logger.logger import *
+from .logger import *

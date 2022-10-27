@@ -20,7 +20,7 @@ from __future__ import annotations
 import socket
 from collections import namedtuple
 
-from .utils import create_prefix, Ansi, LogLevel, write_logfile
+from knxrcore.utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile
 
 level = namedtuple('level', ['level', 'color'])
 
@@ -91,7 +91,7 @@ class Logger:
         if not self.prefix:
             prefix = create_prefix(True, self.hostname, mtype=name if self.disp_type else '')
 
-        mod_msg = log_levels[name].color.value + prefix + msg + Ansi.RESET.value
+        mod_msg = log_levels['info'].color.value + prefix + msg + Ansi.RESET.value
 
         write_logfile(self, prefix + msg)
         return mod_msg
@@ -131,5 +131,5 @@ class Logger:
 
     def debug(self, msg: str) -> None:
         """ This represents a White message with Debug content. """
-        if self.__can_log('error'):
+        if self.__can_log('debug'):
             print(self.__prepare_mod_msg(msg, 'debug'))
