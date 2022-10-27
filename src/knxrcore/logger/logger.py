@@ -20,7 +20,7 @@ from __future__ import annotations
 import socket
 from collections import namedtuple
 
-from src.knxrcore.utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile
+from ..utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile
 
 level = namedtuple('level', ['level', 'color'])
 
