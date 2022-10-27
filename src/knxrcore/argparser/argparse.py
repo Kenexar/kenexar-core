@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import enum
 
-from knxrcore.utils import create_arg_entry
+from src.knxrcore.utils import create_arg_entry
 
 
 class Flags(enum.IntFlag):
