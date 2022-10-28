@@ -16,20 +16,5 @@
 #  OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #  OTHER DEALINGS IN THE SOFTWARE.
 
-
-def create_arg_entry(*ident: str, **kw):
-    return {}.fromkeys(ident, kw)
-
-
-def show_help():
-    return 'someone might need your help'
-
-
-def is_in(search: list, to_search: list) -> list[tuple]:
-    ret = []
-
-    for i in search:
-        if i in to_search:
-            ret.append((i, to_search.index(i)))
-
-    return ret
+class ParseTypeError(Exception):
+    ...

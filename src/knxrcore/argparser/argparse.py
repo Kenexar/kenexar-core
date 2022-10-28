@@ -18,8 +18,9 @@
 from __future__ import annotations
 
 import enum
+from typing import Any
 
-from ..utils import create_arg_entry
+from ..utils import create_arg_entry, show_help, is_in
 
 
 class Flags(enum.IntFlag):
@@ -29,7 +30,8 @@ class Flags(enum.IntFlag):
 class Argparse:
     def __init__(self, name: str = '',
                  description: str = '',
-                 auto_help: bool = True,
+                 _help: bool = True,
+                 exit_on_exception: bool = False,
                  flags: Flags = Flags.NONE) -> None:
         """
 
@@ -41,7 +43,7 @@ class Argparse:
         description : str, optional
             Give it a description.
 
-        auto_help : bool, optional
+        _help : bool, optional
             Create a help site or not.
 
         flags : Flags, optional
@@ -51,43 +53,89 @@ class Argparse:
         self.name = name
         self.description = description
         self.flags = flags
+        self.exit_on_exception = exit_on_exception
 
-        # { '-N': { 'des': 'Some good argument to get some stuff',
-        #          'count': int,
-        #          }
-        self._opt_arguments = {}
+        self._opt_args = {}
 
-        if auto_help:
-            self._opt_arguments = create_arg_entry('-h', '--help', des='Show this page')
+        if _help:
+            self._opt_args = create_arg_entry('-h', '--help',
+                                              des='Show this page',
+                                              fallback=lambda: print(show_help()))
 
     def parse(self, args: list) -> dict:
-        pass
+        """ parse arguments.
 
-    def add_argument(self, *names: list | str, **kw: dict) -> None:
+        Parameters
+        ----------
+        args
+
+        Returns
+        -------
+
+        """
+        found_args = is_in(list(self._opt_args.keys()), args)
+        ret = {}
+
+        for arg, pos in found_args:
+            typ = self._opt_args[arg].get('typ', False)
+
+            if typ:
+                pass
+
+            ret = {**ret, arg: True}
+            pos += 1
+            pos2 = pos + self._opt_args[arg].get('count', 0)
+
+            self._opt_args[arg].get('fallback', lambda: None)()
+
+            if self._opt_args[arg].get('count'):
+                ret[arg] = args[pos:pos2]
+
+            if self._opt_args[arg].get('only', False):
+                return {arg: args[pos:pos2]}
+
+        return ret
+
+    def add_argument(self, *names: list | str, **kw: Any) -> None:
         """ This method adds arguments to the argument list
 
         Parameters
         ----------
         *names : list of strings
             Set the name's for the argument you want to add
+
         **kw : dict
-            des : str
+            des : str, optional
                 Set a description for the argument, will be only shown inside the help
 
-            count : int
+            count : int, optional
                 default : False, Set a count of result's to be passed.
 
                 example: p.add_argument('--rgb', count=3) -> [23, 23, 23]
+
+            typ : str
+                Set a type for the argument, when the type is not eq to the given one, it raises an exception.
+
+            fallback : function reference | lambda, optional
+                Give a fallback function/lambda that should be run when the argument is passed.
+
+                Example: knxrcore/utils/argparseUtils.py -> show_help()
+
+            only : bool
+                If the argument is given only this arg will return the result when it's get executed.
+                On multiple arguments with this parameter, the first one that is passed will be returned.
         """
 
-        temp_dict = {**create_arg_entry(*names, **kw)}
+        temp_dict = {**create_arg_entry(*names,
+                                        des=kw.pop('des', ''),
+                                        count=kw.pop('count', False), **kw)}
 
-        self._opt_arguments.update(**temp_dict)
+        self._opt_args.update(**temp_dict)
 
     @property
     def opt_arguments(self) -> dict:
-        return self._opt_arguments
+        return self._opt_args
 
     def __repr__(self) -> str:
-        args = [k for k, _ in self._opt_arguments.items()]
+        args = [k for k, _ in self._opt_args.items()]
         return f'<name={self.name!r} {args=}>'
