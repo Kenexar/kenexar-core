@@ -25,7 +25,7 @@ def show_help():
     return 'someone might need your help'
 
 
-def is_in(search: list, to_search: list) -> list[tuple]:
+def is_in(search: list, to_search: list) -> list:
     ret = []
 
     for i in search:
