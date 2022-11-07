@@ -84,6 +84,23 @@ class Connection:
 
         return []
 
+    def get_count(self, table: str) -> int:
+        """ Returns the number of rows in the table.
+
+        Parameters
+        ----------
+        table : :class:`str`
+            Table name
+
+        Returns
+        -------
+        int
+            Number of rows in the table.
+        """
+
+        c = self.get("SELECT count(*) FROM %s", table)
+        return c[0] if len(c) > 1 else 0
+
     async def aget(self, sql: str, params: Any = '') -> list[dict | tuple | None]:
         """ Here we can select asynchronous something from the Database.
 
