@@ -77,11 +77,6 @@ class Argparse:
         ret = {}
 
         for arg, pos in found_args:
-            typ = self._opt_args[arg].get('typ', False)
-
-            if typ:
-                pass
-
             ret = {**ret, arg: True}
             pos += 1
             pos2 = pos + self._opt_args[arg].get('count', 0)
@@ -112,9 +107,6 @@ class Argparse:
                 default : False, Set a count of result's to be passed.
 
                 example: p.add_argument('--rgb', count=3) -> [23, 23, 23]
-
-            typ : str
-                Set a type for the argument, when the type is not eq to the given one, it raises an exception.
 
             fallback : function reference | lambda, optional
                 Give a fallback function/lambda that should be run when the argument is passed.

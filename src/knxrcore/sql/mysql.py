@@ -25,10 +25,23 @@ from mysql.connector import connect
 
 class Connection:
     def __init__(self, **kw) -> None:
+        """ Create a new connection
+
+        Parameters
+        ----------
+        kw : dict
+            [user] : sql username
+            [password] : sql password
+            [host] : sql host
+            [db] : sql database
+            [buffered] : create simultaneous query's
+        """
         self.user = kw.get('user', 'root')
         self.password = kw.get('password', '')
         self.host = kw.get('host', 'localhost')
         self.db = kw.get('db', '')
+
+        self.buffered = kw.get('buffered', False)
 
     def get(self, sql: str, params: Any = '') -> list[dict | tuple] | None:
         """ Here we can select something from the Database.
@@ -48,7 +61,7 @@ class Connection:
         """
 
         conn = connect(user=self.user, password=self.password, host=self.host, database=self.db)
-        cur = conn.cursor(buffered=True)
+        cur = conn.cursor(self.buffered)
 
         cur.execute(sql, params)
         result = cur.fetchall()
@@ -75,7 +88,7 @@ class Connection:
         """
 
         conn = connect(user=self.user, password=self.password, host=self.host, database=self.db)
-        cur = conn.cursor(buffered=True)
+        cur = conn.cursor(self.buffered)
 
         cur.execute(sql, params)
 
@@ -84,7 +97,7 @@ class Connection:
 
         return []
 
-    def get_count(self, table: str) -> int:
+    def get_table_count(self, table: str) -> int:
         """ Returns the number of rows in the table.
 
         Parameters
