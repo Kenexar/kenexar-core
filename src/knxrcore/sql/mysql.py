@@ -111,7 +111,7 @@ class Connection:
             Number of rows in the table.
         """
 
-        c = self.get("SELECT count(*) FROM %s", table)
+        c = self.get('SELECT count(*) FROM %s', table)
         return c[0] if len(c) > 1 else 0
 
     async def aget(self, sql: str, params: Any = '') -> list[dict | tuple | None]:
