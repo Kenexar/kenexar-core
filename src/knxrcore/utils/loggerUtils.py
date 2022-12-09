@@ -24,11 +24,11 @@
 from __future__ import annotations
 
 import enum
-import pytz
-import requests
-
 from datetime import datetime
 from typing import TYPE_CHECKING, Any
+
+import pytz
+import requests
 
 if TYPE_CHECKING:
     from knxrcore.logger.logger import Logger
@@ -112,7 +112,7 @@ def create_prefix(date: bool,
     return ret
 
 
-def get_api_back(logger: Logger, hook: str, params: dict, cookies: Any | None, headers: Any | None):
+def get_api_back(logger: Logger, hook: str, params: dict, cookies: Any | None, headers: Any | None, timeout: Any | None):
     url = (logger.api + '/' + hook).replace('///', '//').replace('//', '/').replace(':/', '://')
 
-    requests.get(url=url, params=params, cookies=cookies, headers=headers)
+    requests.get(url=url, params=params, cookies=cookies, headers=headers, timeout=timeout)

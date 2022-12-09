@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import socket
 from collections import namedtuple
-from typing import Any
 
 from ..utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile, get_api_back
 
@@ -157,6 +156,6 @@ class Logger:
     def get_api(self, hook: str, **params) -> Logger:
         if self.api:
             get_api_back(self, hook, params, cookies=params.pop('cookies', ''),
-                         headers=params.pop('headers', ''))
+                         headers=params.pop('headers', ''), timeout=params.pop('timeout', ''))
 
         return self
