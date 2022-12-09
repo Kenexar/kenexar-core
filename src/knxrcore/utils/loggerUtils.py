@@ -21,12 +21,14 @@
 #  of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
 #  conditions:
 #
-#
-import enum
-from datetime import datetime
-from typing import TYPE_CHECKING
+from __future__ import annotations
 
+import enum
 import pytz
+import requests
+
+from datetime import datetime
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from knxrcore.logger.logger import Logger
@@ -34,10 +36,11 @@ if TYPE_CHECKING:
 
 class LogLevel(enum.IntEnum):
     NONE = 0
-    INFO = 1
-    WARNING = 2
-    ERROR = 3
-    DEBUG = 4
+    CRIT = 1
+    ERROR = 2
+    WARNING = 3
+    INFO = 4
+    DEBUG = 5
 
 
 class Ansi(enum.Enum):
@@ -107,3 +110,9 @@ def create_prefix(date: bool,
 
     ret += f'{name} | '
     return ret
+
+
+def get_api_back(logger: Logger, hook: str, params: dict, cookies: Any | None, headers: Any | None):
+    url = (logger.api + '/' + hook).replace('///', '//').replace('//', '/').replace(':/', '://')
+
+    requests.get(url=url, params=params, cookies=cookies, headers=headers)

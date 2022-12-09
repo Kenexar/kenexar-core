@@ -19,16 +19,18 @@ from __future__ import annotations
 
 import socket
 from collections import namedtuple
+from typing import Any
 
-from ..utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile
+from ..utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile, get_api_back
 
 level = namedtuple('level', ['level', 'color'])
 
 log_levels = {
-    'info': level(1, Ansi.GREEN),
-    'warn': level(2, Ansi.YELLOW),
-    'error': level(3, Ansi.RED),
-    'debug': level(4, Ansi.RESET)
+    'critical': level(1, Ansi.RED),
+    'error': level(2, Ansi.RED),
+    'warn': level(3, Ansi.YELLOW),
+    'info': level(4, Ansi.GREEN),
+    'debug': level(5, Ansi.RESET),
 }
 
 
@@ -37,7 +39,8 @@ class Logger:
                  name: str = '',
                  log_file: str = None,
                  prefix: str = '',
-                 disp_type: bool = True) -> None:
+                 disp_type: bool = True,
+                 api_url: str = '') -> None:
 
         """ **This is the base Logger class.**
 
@@ -67,6 +70,7 @@ class Logger:
         self.log_level = log_level
         self.prefix = prefix
         self.disp_type = disp_type
+        self.api = api_url
 
         self.hostname = name if name else socket.gethostname()
 
@@ -91,9 +95,10 @@ class Logger:
         if not self.prefix:
             prefix = create_prefix(True, self.hostname, mtype=name if self.disp_type else '')
 
-        mod_msg = log_levels['info'].color.value + prefix + msg + Ansi.RESET.value
+        mod_msg = log_levels[name].color.value + prefix + msg + Ansi.RESET.value
 
         write_logfile(self, prefix + msg)
+
         return mod_msg
 
     def __can_log(self, name) -> bool:
@@ -114,22 +119,44 @@ class Logger:
             return False
         return True
 
-    def info(self, msg: str) -> None:
+    def info(self, msg: str) -> Logger:
         """ This represents a Green message with info content. """
         if self.__can_log('info'):
             print(self.__prepare_mod_msg(msg, 'info'))
 
-    def warning(self, msg: str) -> None:
+        return self
+
+    def warning(self, msg: str) -> Logger:
         """ This represents a Yellow message with warning content. """
         if self.__can_log('warn'):
             print(self.__prepare_mod_msg(msg, 'warn'))
 
-    def error(self, msg: str) -> None:
+        return self
+
+    def error(self, msg: str) -> Logger:
         """ This represents a Red message with error content. """
         if self.__can_log('error'):
             print(self.__prepare_mod_msg(msg, 'error'))
 
-    def debug(self, msg: str) -> None:
+        return self
+
+    def debug(self, msg: str) -> Logger:
         """ This represents a White message with Debug content. """
         if self.__can_log('debug'):
             print(self.__prepare_mod_msg(msg, 'debug'))
+
+        return self
+
+    def critical(self, msg: str) -> Logger:
+        """ This represents a Red message with Critical content. """
+        if self.__can_log('critical'):
+            print(self.__prepare_mod_msg(msg, 'critical'))
+
+        return self
+
+    def get_api(self, hook: str, **params) -> Logger:
+        if self.api:
+            get_api_back(self, hook, params, cookies=params.pop('cookies', ''),
+                         headers=params.pop('headers', ''))
+
+        return self
