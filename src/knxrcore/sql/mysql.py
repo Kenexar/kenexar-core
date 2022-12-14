@@ -36,12 +36,13 @@ class Connection:
             [db] : sql database
             [buffered] : create simultaneous query's
         """
-        self.user = kw.get('user', 'root')
-        self.password = kw.get('password', '')
-        self.host = kw.get('host', 'localhost')
-        self.db = kw.get('db', '')
+        self.user = kw.pop('user', 'root')
+        self.password = kw.pop('password', '')
+        self.host = kw.pop('host', 'localhost')
+        self.db = kw.pop('db', '')
 
-        self.buffered = kw.get('buffered', False)
+        self.buff = kw.pop('buffered', False)
+        self.kw = kw
 
     def get(self, sql: str, params: Any = '') -> list[dict | tuple] | None:
         """ Here we can select something from the Database.
@@ -60,8 +61,8 @@ class Connection:
             Returns the result of the given query.
         """
 
-        conn = connect(user=self.user, password=self.password, host=self.host, database=self.db)
-        cur = conn.cursor(self.buffered)
+        conn = connect(user=self.user, password=self.password, host=self.host, database=self.db, **self.kw)
+        cur = conn.cursor(self.buff)
 
         cur.execute(sql, params)
         result = cur.fetchall()
@@ -87,8 +88,8 @@ class Connection:
             Nothing.
         """
 
-        conn = connect(user=self.user, password=self.password, host=self.host, database=self.db)
-        cur = conn.cursor(self.buffered)
+        conn = connect(user=self.user, password=self.password, host=self.host, database=self.db, **self.kw)
+        cur = conn.cursor(self.buff)
 
         cur.execute(sql, params)
 
@@ -151,3 +152,9 @@ class Connection:
        """
 
         return self.update(sql, params)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return
