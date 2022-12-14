@@ -1,13 +1,9 @@
 <br />
 <div align="center">
-  <a href="https://github.com/Kenexar/kenexar-core">
-    <img src="https://cloud.kenexar.eu/s/bQBApT3Sa56KBij/preview" alt="Logo" width="80" height="80">
-  </a>
-
   <h3 align="center">Kenexar-Core</h3>
 
   <p align="center">
-    This is the base Package for the most python projects from the KenexarEU Team.<br> Also is this project a collection of the most used code snippets.
+    Welcome to the Kenexar Team's base package for Python projects. This project is a collection of our most commonly used code snippets, designed to make your development process more efficient and streamlined.
     <br />
     <a href="https://kenexar.github.io/kenexar-core/"><strong>Explore the docs »</strong></a>
     <br />
@@ -24,7 +20,8 @@
 
 
 ## Installation
-Here I give you the Installation instruction:
+
+To install this package, follow the instructions below:
 
 #### On Windows:
 - `pip install kenexar-core`
@@ -32,22 +29,26 @@ Here I give you the Installation instruction:
 #### On Linux:
 - `python3 -m pip install kenexar-core`
 
-
-And then you can start.
+Once the package is installed, you can start using it in your Python project.
 
 ## Contributing
-Feel free to open Issues or PR's
 
-### Create your Enviroment
+If you would like to contribute to this project, please feel free to open issues or pull requests on our GitHub repository.
 
-  - 1: clone the current project via: https -> `git clone https://github.com/kenexar/kenexar-core` <br>
-  - 2: When you are on Linux/OSX or have a WSL on Win, you can run the setup.sh with `./setup.sh`
-    ##### When the setup.sh is not working, follow these steps.
-    - 2.1: Create a virtual enviroment with `python3 -m venv venv/` and activate it `venv/Scripts/activate`.<br>
-    - 2.2: Install the requirements with `pip install -r req`. <br>
-  - 3: Have fun Developing! :D
+To set up your development environment, follow these steps:
 
+1. Clone the project using the following command: `git clone https://github.com/kenexar/kenexar-core`
+2. If you are using Linux or OSX, or have a Windows Subsystem for Linux (WSL) installed on Windows, you can run the `setup.sh` script to set up your environment: `./setup.sh`
+    - If the `setup.sh` script does not work for you, you can set up your environment manually by following these steps:
+      1. Create a virtual environment with the following command: `python3 -m venv venv/`
+      2. Activate the virtual environment: `venv/Scripts/activate`
+      3. Install the required dependencies: `pip install -r req`
+3. Once your environment is set up, you can start developing and contributing to the project!
 
+## License
 
+This project is licensed under the MIT license. For more information, see the [LICENSE](LICENSE) file in this repository.
+
+---
 
 Project by [exersalza "Julian J."](https://github.com/exersalza)
