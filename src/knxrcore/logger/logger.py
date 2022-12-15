@@ -156,6 +156,6 @@ class Logger:
     def get_api(self, hook: str, **params) -> Logger:
         if self.api:
             get_api_back(self, hook, params, cookies=params.pop('cookies', ''),
-                         headers=params.pop('headers', ''), timeout=params.pop('timeout', ''))
+                         headers=params.pop('headers', ''), timeout=params.pop('timeout', None))
 
         return self
