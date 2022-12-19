@@ -160,8 +160,11 @@ class Logger:
 
         Parameters
         ----------
-        hook : Define the api path
-        **params : Give requests params
+        hook : str
+            Define the api path
+
+        **params : str
+            Give requests params
 
         Returns
         -------
