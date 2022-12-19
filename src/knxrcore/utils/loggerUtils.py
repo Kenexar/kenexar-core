@@ -115,4 +115,5 @@ def create_prefix(date: bool,
 def get_api_back(logger: Logger, hook: str, params: dict, cookies: Any | None, headers: Any | None, timeout: Any | None):
     url = (logger.api + '/' + hook).replace('///', '//').replace('//', '/').replace(':/', '://')
 
-    requests.get(url=url, params=params, cookies=cookies, headers=headers, timeout=timeout)
+    res = requests.get(url=url, params=params, cookies=cookies, headers=headers, timeout=timeout)
+    return res

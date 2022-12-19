@@ -20,6 +20,8 @@ from __future__ import annotations
 import socket
 from collections import namedtuple
 
+from requests import Response
+
 from ..utils.loggerUtils import create_prefix, Ansi, LogLevel, write_logfile, get_api_back
 
 level = namedtuple('level', ['level', 'color'])
@@ -153,9 +155,23 @@ class Logger:
 
         return self
 
-    def get_api(self, hook: str, **params) -> Logger:
-        if self.api:
-            get_api_back(self, hook, params, cookies=params.pop('cookies', ''),
-                         headers=params.pop('headers', ''), timeout=params.pop('timeout', None))
+    def get_api(self, hook: str, **params) -> Response:
+        """ Send the log to an api
 
-        return self
+        Parameters
+        ----------
+        hook : Define the api path
+        params : Give requests params
+
+        Returns
+        -------
+        Response obj
+        """
+
+        res = 404
+
+        if self.api:
+            res = get_api_back(self, hook, cookies=params.pop('cookies', ''),
+                               headers=params.pop('headers', ''), timeout=params.pop('timeout', None), params=params)
+
+        return res
